@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ title }} | {{ super() }} | {{ title }}{% endblock %}
+
+{% block app_content %}
+<div class="container">
+    <div class="col-md-12">
+        <h1>This is the cart page</h1>
+        
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Total</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for k,v in display_cart.items() %}
+                    <tr>
+                        <td class="col-sm-8 col-md-6">
+                        <div class="media">
+                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="{{ v['image'] }}" style="width: 72px; height: 72px;"> </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="#">{{ v['name'] }}</a></h4>
+                                <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                            </div>
+                        </div></td>
+                        <td class="col-sm-1 col-md-1" style="text-align: center">
+                        <input type="number" class="form-control" id="quantity">
+                        </td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong>${{ v['price'] }}</strong></td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong>${{ v['qty'] * v['price'] }}</strong></td>
+                        <td class="col-sm-1 col-md-1">
+                        <a type="button" class="btn btn-danger" href="/remove_item/{{ k }}"><span class="glyphicon glyphicon-remove"></span> Remove</a></td>
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h3>Total</h3></td>
+                        <td class="text-right"><h3><strong>{{ "$%.2f"|format(total) }}</strong></h3></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>
+                            <a href='{{ url_for("index") }}' class="btn-btn-default"><span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping</a>
+                        </td>
+                        <td>
+                        <form action="{{ url_for('charge') }}" method="POST">
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="{{ key }}"
+                                data-description="A Flask Charge"
+                                data-amount="500"
+                                data-locale="auto"></script>
+                        <a type="button" class="btn btn-success">
+                            Pay With <span class="glyphicon glyphicon-play"></span>
+                        </a>
+                        </form>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+
+{% endblock %}

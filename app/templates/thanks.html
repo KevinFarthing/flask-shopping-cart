@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ title }} | {{ super() }}
+{% endblock %}
+
+{% block app_content %}
+Thank you! you were charged ${{ amount }}
+{% endblock %}
