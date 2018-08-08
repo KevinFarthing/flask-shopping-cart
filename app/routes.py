@@ -46,7 +46,7 @@ def cart():
   }
   return render_template('cart.html', **context)
 
-@app.route('/charge')
+@app.route('/charge', methods=["POST"])
 def charge():
   amount = 500
   customer = stripe.Customer.create(
@@ -60,7 +60,16 @@ def charge():
     currency='usd',
     description='test charge'
   )
-  return render_template('thank.html', amount=amount)
+  session['chargeAmount']=amount
+  session["cart"].clear() #???
+  return redirect(url_for('thanks'))
+
+@app.route('/thanks')
+def thanks():
+  context={
+    'amount':session['chargeAmount']
+  }
+  return render_template('thanks.html',**context)
 
 @app.route('/add_to_cart/<int:id>')
 def add_to_cart(id):
@@ -74,4 +83,10 @@ def add_to_cart(id):
 def remove_item(id):
   session["cart"].remove(id)
   flash("item removed from cart")
+  return redirect(url_for('cart'))
+
+@app.route('/clear_cart')
+def clear_cart():
+  session["cart"].clear()
+  flash("Cart has been Cleared")
   return redirect(url_for('cart'))

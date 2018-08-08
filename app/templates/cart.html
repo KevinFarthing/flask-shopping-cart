@@ -53,7 +53,7 @@
                         <td>   </td>
                         <td>   </td>
                         <td>
-                            <a href='{{ url_for("index") }}' class="btn-btn-default"><span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping</a>
+                            <a href='{{ url_for("index") }}' class="btn btn-default"><span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping</a>
                         </td>
                         <td>
                         <form action="{{ url_for('charge') }}" method="POST">
@@ -62,11 +62,9 @@
                                 data-description="A Flask Charge"
                                 data-amount="500"
                                 data-locale="auto"></script>
-                        <a type="button" class="btn btn-success">
-                            Pay With <span class="glyphicon glyphicon-play"></span>
-                        </a>
+
                         </form>
-                    </td>
+                        </td>
                     </tr>
                 </tbody>
             </table>
